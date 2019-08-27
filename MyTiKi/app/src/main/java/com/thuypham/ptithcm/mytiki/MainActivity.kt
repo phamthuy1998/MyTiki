@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
         viewPagerMain.adapter = viewPagerAdapter
 
-        viewPagerMain.setOffscreenPageLimit(1)
+        //viewPagerMain.setOffscreenPageLimit(1)
 
         viewPagerMain.addOnPageChangeListener(this)
 

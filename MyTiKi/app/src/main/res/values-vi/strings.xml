@@ -99,5 +99,16 @@
     <string name="error_load_category">Không thể tải danh mục sản phẩm</string>
     <string name="list_product">Danh sách sản phẩm</string>
     <string name="check_verifire_mail">Nếu bạn không nhận được email, vui lòng kiểm tra lại xem email của bạn có hợp lệ không </string>
+    <string name="_1_290_000">1.290.000 đ</string>
+    <string name="active_account">Kích hoạt tài khoan</string>
+    <string name="what_do_you_find_today">Bạn muốn tìm gì hôm nay?</string>
+    <string name="viewed_product">Danh sách sản phẩm đã xem</string>
+    <string name="view_more">Xem thêm</string>
+    <string name="title_notifications">Thông báo</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="saling_product">Danh sách sản phẩm đang giảm giá</string>
+    <string name="sale_percent">%sale</string>
+    <string name="pulll_up_to_load_more">Kéo lên để tải thêm thông tin</string>
+    <string name="pull_to_refresh">Kéo để tải lại trang</string>
 
 </resources>

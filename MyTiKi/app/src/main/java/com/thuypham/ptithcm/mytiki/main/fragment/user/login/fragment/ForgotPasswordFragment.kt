@@ -71,7 +71,7 @@ class ForgotPasswordFragment : Fragment() {
                             updateUI()
                         } else {
                             Log.w(tag, task.exception?.message)
-                            edt_email_forgot_password.setText(getString(R.string.error_input_email_not_exists))
+                            Toast.makeText(requireContext(), getString(R.string.error_input_email_not_exists), Toast.LENGTH_LONG).show()
                         }
                     }
         } else {

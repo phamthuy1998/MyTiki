@@ -15,7 +15,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.thuypham.ptithcm.mytiki.MainActivity
 import com.thuypham.ptithcm.mytiki.R
 import com.thuypham.ptithcm.mytiki.help.PhysicsConstants
 import com.thuypham.ptithcm.mytiki.main.fragment.category.model.Advertisement
@@ -32,7 +31,6 @@ import kotlinx.android.synthetic.main.loading_layout.*
 import java.util.*
 import kotlin.collections.ArrayList
 import com.todou.nestrefresh.base.OnRefreshListener
-import java.io.Serializable
 
 
 class HomeFragment : Fragment() {
@@ -57,10 +55,10 @@ class HomeFragment : Fragment() {
     private var productSaleList = ArrayList<Product>()
 
     //Viewed product
+    private var arrIdProductViewed = ArrayList<String>()
     private var productViewedAdapter: ProductViewedAdapter? = null
     private var productViewedList = ArrayList<Product>()
-    var i = 0;
-    private lateinit var product: Product
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(tag, "\nonCreateView");
         return inflater.inflate(R.layout.home_fragment, container, false)
@@ -69,20 +67,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(tag, "\non onViewCreated")
-        if (savedInstanceState == null) {
-            println("save install null")
-            inItView()
-//            getDataAVT()
-//            getListProductSale()
+        println("save install null")
+        inItView()
+        getDataAVT()
+        getListProductSale()
 
-            // Get list product sale
-            getListProductViewed()
-            if (productViewedList.isEmpty()) ll_viewed_product.visibility = View.GONE
-            else ll_viewed_product.visibility = View.VISIBLE
+//             Get list product sale
+        getListIdProduct()
+        if (arrIdProductViewed.isEmpty()) ll_viewed_product.visibility = View.GONE
+        else {
+            println("list khong rong")
+            ll_viewed_product.visibility = View.VISIBLE
+            getListProductByID(arrIdProductViewed)
+            println("sze mang: ${productViewedList.size}")
 
-//            getDataCategory()
-//            getListProduct()
+
         }
+        getDataCategory()
+        getListProduct()
     }
 
     private fun getListProduct() {
@@ -131,7 +133,7 @@ class HomeFragment : Fragment() {
     // get list of id product inside user
     // then map id product to product root child
     // show into home fragment if it have data
-    private fun getListProductViewed() {
+    private fun getListIdProduct() {
         val user: FirebaseUser? = mAuth?.getCurrentUser();
         if (user != null) {
             //product viewed
@@ -148,7 +150,7 @@ class HomeFragment : Fragment() {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        productViewedList.clear()
+                        arrIdProductViewed.clear()
                         var product: Product? = null
                         if (dataSnapshot.exists()) {
                             println("viewed product co du lieu")
@@ -156,15 +158,10 @@ class HomeFragment : Fragment() {
                                 val id: String? = ds.child(PhysicsConstants.VIEWED_PRODUCT_ID).value as String?
                                 println(" id product: $id")
                                 if (id != null) {
-                                    getInforOfProductById(id)
-                                    if (product != null)
-                                        productViewedList.add(product)
+                                    arrIdProductViewed.add(id)
                                 }
                             }
-                            println("so phan tu cua view product: ${productViewedList.size}")
-                            // product sale change view
-                            productViewedList.reverse()
-                            productViewedAdapter?.notifyDataSetChanged()
+                            println("so phan tu id product: ${arrIdProductViewed.size}")
                         }
                     }
                 }
@@ -182,37 +179,42 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun getInforOfProductById(id: String) {
-        println("vo toi day luon nhi")
-        mDatabase = FirebaseDatabase.getInstance()
-        val query = mDatabase!!
-            .reference
-            .child(PhysicsConstants.PRODUCT)
-            .child(id)
+    fun getListProductByID(arrId: ArrayList<String>) {
+        var product: Product
+        for (id in arrId) {
+            println("vo toi day luon nhi")
+            mDatabase = FirebaseDatabase.getInstance()
+            val query = mDatabase!!
+                .reference
+                .child(PhysicsConstants.PRODUCT)
+                .child(id)
 
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(ds: DataSnapshot) {
-                if (ds.exists()) {
-                    println("co vo day lay thong tin k")
-                    val name = ds.child(PhysicsConstants.NAME_PRODUCT).value as String
-                    val price = ds.child(PhysicsConstants.PRICE_PRODUCT).value as Long
-                    val image = ds.child(PhysicsConstants.IMAGE_PRODUCT).value as String
-                    val infor = ds.child(PhysicsConstants.INFOR_PRODUCT).value as String
-                    val product_count = ds.child(PhysicsConstants.PRODUCT_COUNT).value as Long
-                    val id_category = ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
-                    val sale = ds.child(PhysicsConstants.PRODUCT_SALE).value as Long
+            val valueEventListener = object : ValueEventListener {
+                override fun onDataChange(ds: DataSnapshot) {
+                    if (ds.exists()) {
+                        println("co vo day lay thong tin k")
+                        val name = ds.child(PhysicsConstants.NAME_PRODUCT).value as String
+                        val price = ds.child(PhysicsConstants.PRICE_PRODUCT).value as Long
+                        val image = ds.child(PhysicsConstants.IMAGE_PRODUCT).value as String
+                        val infor = ds.child(PhysicsConstants.INFOR_PRODUCT).value as String
+                        val product_count = ds.child(PhysicsConstants.PRODUCT_COUNT).value as Long
+                        val id_category = ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
+                        val sale = ds.child(PhysicsConstants.PRODUCT_SALE).value as Long
 
-                    println("name of product : $name")
-                    product = Product(id, name, price, image, infor, product_count, id_category, sale)
-                    println("lay sp thanh cong")
+                        println("name of product : $name")
+                        product = Product(id, name, price, image, infor, product_count, id_category, sale)
+                        productViewedList.add(product)
+                        println("lay sp thanh cong")
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("lay 1 sp k thanh cong")
                 }
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                println("lay 1 sp k thanh cong")
-            }
+            query.addValueEventListener(valueEventListener)
         }
-        query.addValueEventListener(valueEventListener)
+
     }
 
     private fun inItView() {
@@ -226,6 +228,16 @@ class HomeFragment : Fragment() {
         view_refresh_header.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh() {
                 view_refresh_header.postDelayed({
+                    getDataAVT()
+                    getListProductSale()
+
+                    // Get list product sale
+                    getListIdProduct()
+                    if (productViewedList.isEmpty()) ll_viewed_product.visibility = View.GONE
+                    else ll_viewed_product.visibility = View.VISIBLE
+
+                    getDataCategory()
+                    getListProduct()
                     view_refresh_header.stopRefresh()
                 }, 2000)
             }
@@ -340,7 +352,6 @@ class HomeFragment : Fragment() {
                 handler.post(Update)
             }
         }, 3000, 3000)
-
         // Pager listener over indicator
         indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 

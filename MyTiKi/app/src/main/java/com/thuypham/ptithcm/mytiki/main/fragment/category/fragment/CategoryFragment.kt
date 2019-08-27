@@ -86,7 +86,7 @@ class CategoryFragment : Fragment() {
 
     private fun getDataCategory() {
         if (isLoading == true) {
-            progress.visibility = View.VISIBLE
+            // progress.visibility = View.VISIBLE
         }
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -108,7 +108,7 @@ class CategoryFragment : Fragment() {
                 }
                 adapter?.notifyDataSetChanged()
 
-                progress.visibility = View.GONE
+               // progress.visibility = View.GONE
 
             }
 
