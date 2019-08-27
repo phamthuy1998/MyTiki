@@ -27,7 +27,6 @@ class CategoryFragment : Fragment() {
     private var mDatabase: FirebaseDatabase? = null
     private var mAuth: FirebaseAuth? = null
 
-    private var isLoading: Boolean = true
     // Category
     private var adapter: CategoryAdapter? = null
     private var categoryList = ArrayList<Category>()
@@ -65,7 +64,7 @@ class CategoryFragment : Fragment() {
     }
 
     private fun addEvent() {
-        gv_category.onItemClickListener= object : AdapterView.OnItemClickListener {
+        gv_category.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 // Get the GridView selected/clicked item text
                 val selectedItem = parent.getItemAtPosition(position).toString()
@@ -76,22 +75,15 @@ class CategoryFragment : Fragment() {
                         "GridView item clicked : ${categoryList[position].nameCategory} \\nAt index position : $position\"",
                         Toast.LENGTH_LONG
                 ).show()
-//                println(categoryList[position].nameCategory)
-//                Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())
-//
-//                text_view.text = "GridView item clicked : $selectedItem \nAt index position : $position"
             }
         }
     }
 
     private fun getDataCategory() {
-        if (isLoading == true) {
-            // progress.visibility = View.VISIBLE
-        }
+        progress.visibility = View.VISIBLE
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 categoryList.clear()
-                isLoading = false
                 for (ds in dataSnapshot.children) {
                     val id = ds.child(PhysicsConstants.CATEGORY_ID).value as String
                     val name = ds.child(PhysicsConstants.CATEGORY_NAME).value as String
@@ -108,12 +100,11 @@ class CategoryFragment : Fragment() {
                 }
                 adapter?.notifyDataSetChanged()
 
-               // progress.visibility = View.GONE
+                progress.visibility = View.GONE
 
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                isLoading = false
                 Toast.makeText(
                         requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                         Toast.LENGTH_LONG

@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     private var categoryList = ArrayList<Category>()
     private lateinit var categoryAdapter: CategoryAdapterHome
 
-    // List Advertisement
+    // List
     private var arrAdvertisement = ArrayList<Advertisement>()
 
     //product
@@ -352,6 +352,7 @@ class HomeFragment : Fragment() {
                 handler.post(Update)
             }
         }, 3000, 3000)
+
         // Pager listener over indicator
         indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 

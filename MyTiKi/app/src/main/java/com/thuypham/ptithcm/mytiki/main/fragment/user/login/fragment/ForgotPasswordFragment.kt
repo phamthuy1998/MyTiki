@@ -47,8 +47,6 @@ class ForgotPasswordFragment : Fragment() {
             after(2000, process = {
                 sendPasswordResetEmail()
             })
-
-
         }
 
     }

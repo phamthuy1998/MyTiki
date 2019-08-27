@@ -26,9 +26,39 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_fragment_home">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_search_home"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?actionBarSize"
+                android:background="@color/colorBlue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="48dp"
+                    android:background="@drawable/edit_seach_bg"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="@string/what_do_you_find_today"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_search_home">
 
                 <LinearLayout
                     android:id="@+id/ll_home"
@@ -36,28 +66,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar_search_home"
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        android:background="@color/colorBlue">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="48dp"
-                            android:background="@drawable/edit_seach_bg"
-                            android:drawableStart="@drawable/ic_search"
-                            android:drawablePadding="10dp"
-                            android:ellipsize="end"
-                            android:padding="8dp"
-                            android:singleLine="true"
-                            android:text="@string/what_do_you_find_today"
-                            android:textColor="@color/colorTextHint"
-                            android:textSize="16sp" />
-
-                    </androidx.appcompat.widget.Toolbar>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
