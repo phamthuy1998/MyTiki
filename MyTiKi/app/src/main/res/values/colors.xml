@@ -17,4 +17,6 @@
     <color name="colorRedError">#F44336</color>
     <color name="colorBlue_text">#0B3F69</color>
     <color name="colorGrayBghint">#D3D3D3</color>
+    <color name="colorGrayStar">#9C9C9C</color>
+    <color name="colorGreen">#4CAF50</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.thuypham.ptithcm.mytiki.main.fragment.home.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import com.bumptech.glide.Glide
 import com.thuypham.ptithcm.mytiki.R
 import com.thuypham.ptithcm.mytiki.main.fragment.category.model.Category
 import com.thuypham.ptithcm.mytiki.main.fragment.home.fragment.HomeFragment
+import com.thuypham.ptithcm.mytiki.main.product.activity.ProductDetailActivity
 import com.thuypham.ptithcm.mytiki.main.product.model.Product
 import kotlinx.android.synthetic.main.item_product.view.*
+import kotlinx.android.synthetic.main.item_product_sale.view.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -33,15 +36,21 @@ class ProductAdapter(private var items: ArrayList<Product>, private val context:
             // set price for product
             val price = df.format(product.price) + " đ"
             itemView.tv_price_product.text = price
-            val sale= "-" + product.sale .toString()+"%"
-            itemView.tv_sale_product.text= sale
+            val sale = "-" + product.sale.toString() + "%"
+            itemView.tv_sale_product.text = sale
             println("gia sp : $price")
             println("name sp : ${product.name}")
 
-            //sset image view category
+            //sset image view product
             Glide.with(itemView)
                     .load(product.image)
                     .into(itemView.iv_product)
+
+            itemView.ll_product.setOnClickListener {
+                var intent = Intent(context.context, ProductDetailActivity::class.java)
+                intent.putExtra("id_product", product.id)
+                context.startActivity(intent)
+            }
         }
 
     }

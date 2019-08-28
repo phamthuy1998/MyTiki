@@ -126,6 +126,20 @@
     <string name="viewed_product">Viewed products</string>
     <string name="title_home">Home</string>
     <string name="title_notifications">Notifications</string>
+    <string name="color">Color: </string>
+    <string name="change">Change</string>
+    <string name="comment_count">Comment count</string>
+    <string name="out_of_product">Out of product</string>
+    <string name="choose_to_buy">Choose to buy</string>
+    <string name="product_details">Product details</string>
+    <string name="customer_comment">Customer comment</string>
+    <string name="_4_5_5">4.5/5</string>
+    <string name="_100">100%</string>
+    <string name="content_of_product_detail">Content of product detail</string>
+    <string name="make_a_comment">Make a comment</string>
+    <string name="title_comment">Title comment</string>
+    <string name="time_commnent">Time commnent</string>
+    <string name="have_purchase">Have purchase</string>
 
 
 </resources>

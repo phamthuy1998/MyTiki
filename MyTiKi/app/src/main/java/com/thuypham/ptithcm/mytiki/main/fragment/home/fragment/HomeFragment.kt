@@ -85,6 +85,11 @@ class HomeFragment : Fragment() {
         }
         getDataCategory()
         getListProduct()
+        addEvent()
+    }
+
+    private fun addEvent() {
+
     }
 
     private fun getListProduct() {
@@ -228,7 +233,6 @@ class HomeFragment : Fragment() {
         view_refresh_header.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh() {
                 view_refresh_header.postDelayed({
-                    getDataAVT()
                     getListProductSale()
 
                     // Get list product sale
@@ -238,6 +242,7 @@ class HomeFragment : Fragment() {
 
                     getDataCategory()
                     getListProduct()
+
                     view_refresh_header.stopRefresh()
                 }, 2000)
             }

@@ -45,4 +45,17 @@ object PhysicsConstants {
     //viewed products
     const val VIEWED_PRODUCT = "viewed_product"
     const val VIEWED_PRODUCT_ID = "id"
+
+    // rating product
+    const val RATE = "RATE"
+    const val RATE_ID = "id"
+    const val RATE_COUNT = "rate_count"
+    const val RATE_TIME = "time"
+    const val RATE_CONTENT = "content"
+    const val RATE_IMAGE = "image"
+    const val RATE_ID_ACC = "id_acc"
+    const val RATE_ID_PRODUCT = "id_product"
+
+
+
 }
