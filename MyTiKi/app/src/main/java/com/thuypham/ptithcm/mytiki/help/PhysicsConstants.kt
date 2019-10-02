@@ -19,6 +19,7 @@ object PhysicsConstants {
     // product
     const val PRODUCT_ID = "id"
     const val PRODUCT = "PRODUCT"
+    const val PRODUCT_SOLD = "sold"
     const val PRODUCT_SALE = "sale"
     const val NAME_PRODUCT = "name"
     const val PRICE_PRODUCT = "price"
@@ -39,10 +40,33 @@ object PhysicsConstants {
     const val ADVERTIEMENT = "advertisement"
     const val NAME_AVT = "name"
     const val AVT_ID_CATEGORY = "id_category"
+    const val AVT_NAME_CATEGORY = "name_category"
     const val ID_AVT = "id"
     const val IMAGE_AVT = "image"
 
     //viewed products
     const val VIEWED_PRODUCT = "viewed_product"
     const val VIEWED_PRODUCT_ID = "id"
+
+    // rating product
+    const val RATE = "RATE"
+    const val RATE_ID = "id"
+    const val RATE_COUNT = "rate_count"
+    const val RATE_TIME = "time"
+    const val RATE_CONTENT = "content"
+    const val RATE_IMAGE = "image"
+    const val RATE_ID_ACC = "id_acc"
+    const val RATE_ID_PRODUCT = "id_product"
+
+    //favorite_product
+    const val FAVORITE_PRODUCT = "favorite_product"
+    const val FAVORITE_ID = "id"
+
+
+    //Cart
+    const val CART = "cart"
+    const val CART_ID = "id"
+    const val CART_NUMBER = "number"
+
+
 }

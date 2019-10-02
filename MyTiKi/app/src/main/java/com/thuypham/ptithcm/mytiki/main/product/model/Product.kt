@@ -21,7 +21,7 @@ class Product(
         var infor: String?,
 
         @SerializedName("product_count")
-        var product_count: Long?,
+        var product_count: Long,
 
         @SerializedName("id_category")
         var id_category: String?,

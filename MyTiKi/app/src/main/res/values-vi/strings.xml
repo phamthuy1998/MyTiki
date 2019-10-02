@@ -10,7 +10,7 @@
     <string name="tv_email_user">youremail@gmail.com</string>
     <string name="tv_name">Tên</string>
     <string name="tv_order_management">Quản lý đơn hàng</string>
-    <string name="tv_taken">TIki đã tiếp nhận</string>
+    <string name="tv_taken">Đơn hàng đã tiếp nhận</string>
     <string name="tv_title_user_fragment">Cá nhân</string>
     <string name="birthday">Ngày sinh</string>
     <string name="billing_information">Thông tin thanh toán</string>
@@ -20,7 +20,7 @@
     <string name="favorite_product">Sản phẩm yêu thích</string>
     <string name="female">Nữ</string>
     <string name="forgot_password">Quên mật khẩu?</string>
-    <string name="hot_line_1800_6963_free">Đường dây nóng: 1800 6963 (miên phí)</string>
+    <string name="hot_line_1800_6963_free">Đường dây nóng: 0373865759</string>
     <string name="list_of_addresses">Sổ địa chỉ</string>
     <string name="mycomment">Bình luận của tôi</string>
     <string name="name_sign_up">Họ và tên</string>
@@ -106,7 +106,7 @@
     <string name="view_more">Xem thêm</string>
     <string name="title_notifications">Thông báo</string>
     <string name="title_home">Trang chủ</string>
-    <string name="saling_product">Danh sách sản phẩm đang giảm giá</string>
+    <string name="saling_product">Sản phẩm đang giảm giá</string>
     <string name="sale_percent">%sale</string>
     <string name="pulll_up_to_load_more">Kéo lên để tải thêm thông tin</string>
     <string name="pull_to_refresh">Kéo để tải lại trang</string>

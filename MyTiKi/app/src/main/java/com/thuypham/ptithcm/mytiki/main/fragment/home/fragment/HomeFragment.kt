@@ -1,5 +1,6 @@
 package com.thuypham.ptithcm.mytiki.main.fragment.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.thuypham.ptithcm.mytiki.R
 import com.thuypham.ptithcm.mytiki.help.PhysicsConstants
+import com.thuypham.ptithcm.mytiki.main.fragment.category.activity.ProductOfCategory
 import com.thuypham.ptithcm.mytiki.main.fragment.category.model.Advertisement
 import com.thuypham.ptithcm.mytiki.main.fragment.category.model.Category
 import com.thuypham.ptithcm.mytiki.main.fragment.home.adapter.CategoryAdapterHome
@@ -59,7 +61,11 @@ class HomeFragment : Fragment() {
     private var productViewedAdapter: ProductViewedAdapter? = null
     private var productViewedList = ArrayList<Product>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         Log.d(tag, "\nonCreateView");
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
@@ -72,19 +78,18 @@ class HomeFragment : Fragment() {
         getDataAVT()
         getListProductSale()
 
-//             Get list product sale
-        getListIdProduct()
-        if (arrIdProductViewed.isEmpty()) ll_viewed_product.visibility = View.GONE
-        else {
-            println("list khong rong")
-            ll_viewed_product.visibility = View.VISIBLE
-            getListProductByID(arrIdProductViewed)
-            println("sze mang: ${productViewedList.size}")
+        //   Get list product sviewed
+        getListIdProductViewed()
 
+        println("12hg " + arrIdProductViewed.size)
 
-        }
         getDataCategory()
         getListProduct()
+        addEvent()
+    }
+
+    private fun addEvent() {
+
     }
 
     private fun getListProduct() {
@@ -104,10 +109,12 @@ class HomeFragment : Fragment() {
                         val image = ds.child(PhysicsConstants.IMAGE_PRODUCT).value as String
                         val infor = ds.child(PhysicsConstants.INFOR_PRODUCT).value as String
                         val product_count = ds.child(PhysicsConstants.PRODUCT_COUNT).value as Long
-                        val id_category = ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
+                        val id_category =
+                            ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
                         val sale = ds.child(PhysicsConstants.PRODUCT_SALE).value as Long
 
-                        val product = Product(id, name, price, image, infor, product_count, id_category, sale)
+                        val product =
+                            Product(id, name, price, image, infor, product_count, id_category, sale)
                         productList.add(product)
                         println("ten san pham: ${name}")
 
@@ -121,7 +128,8 @@ class HomeFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Toast.makeText(
-                    requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
+                    requireContext(),
+                    getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                     Toast.LENGTH_LONG
                 ).show()
                 Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())
@@ -133,7 +141,7 @@ class HomeFragment : Fragment() {
     // get list of id product inside user
     // then map id product to product root child
     // show into home fragment if it have data
-    private fun getListIdProduct() {
+    private fun getListIdProductViewed() {
         val user: FirebaseUser? = mAuth?.getCurrentUser();
         if (user != null) {
             //product viewed
@@ -147,28 +155,39 @@ class HomeFragment : Fragment() {
                 .child(uid)
                 .child(PhysicsConstants.VIEWED_PRODUCT)
                 .limitToLast(20)
+
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
                         arrIdProductViewed.clear()
-                        var product: Product? = null
-                        if (dataSnapshot.exists()) {
-                            println("viewed product co du lieu")
-                            for (ds in dataSnapshot.children) {
-                                val id: String? = ds.child(PhysicsConstants.VIEWED_PRODUCT_ID).value as String?
-                                println(" id product: $id")
-                                if (id != null) {
-                                    arrIdProductViewed.add(id)
-                                }
+                        println("viewed product co du lieu")
+                        for (ds in dataSnapshot.children) {
+                            val id: String? =
+                                ds.child(PhysicsConstants.VIEWED_PRODUCT_ID).value as String?
+                            println(" id product: $id")
+                            if (id != null) {
+                                arrIdProductViewed.add(id)
                             }
-                            println("so phan tu id product: ${arrIdProductViewed.size}")
                         }
+                        productViewedAdapter?.notifyDataSetChanged()
+                        println("so phan tu id product: ${arrIdProductViewed.size}")
+
+                        // get product viewed infor
+                        if (!arrIdProductViewed.isEmpty()) {
+                            println("list khong rong")
+                            getListProductByID(arrIdProductViewed)
+                        }
+
+                    } else {
+                        println("k co dl viewed")
+                        ll_viewed_product.visibility = View.GONE
                     }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
                     Toast.makeText(
-                        requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
+                        requireContext(),
+                        getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                         Toast.LENGTH_LONG
                     ).show()
                     Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())
@@ -176,11 +195,13 @@ class HomeFragment : Fragment() {
             }
             query.addValueEventListener(valueEventListener)
 
-        }
+        } else ll_viewed_product.visibility = View.GONE
     }
 
+    // get infor for list product by using id of product
     fun getListProductByID(arrId: ArrayList<String>) {
         var product: Product
+        productViewedList.clear()
         for (id in arrId) {
             println("vo toi day luon nhi")
             mDatabase = FirebaseDatabase.getInstance()
@@ -198,13 +219,18 @@ class HomeFragment : Fragment() {
                         val image = ds.child(PhysicsConstants.IMAGE_PRODUCT).value as String
                         val infor = ds.child(PhysicsConstants.INFOR_PRODUCT).value as String
                         val product_count = ds.child(PhysicsConstants.PRODUCT_COUNT).value as Long
-                        val id_category = ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
+                        val id_category =
+                            ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
                         val sale = ds.child(PhysicsConstants.PRODUCT_SALE).value as Long
 
                         println("name of product : $name")
-                        product = Product(id, name, price, image, infor, product_count, id_category, sale)
+                        product =
+                            Product(id, name, price, image, infor, product_count, id_category, sale)
                         productViewedList.add(product)
                         println("lay sp thanh cong")
+                        println("size mang xem1: " + productViewedList.size)
+                        ll_viewed_product.visibility = View.VISIBLE
+                        productViewedAdapter?.notifyDataSetChanged()
                     }
                 }
 
@@ -221,30 +247,24 @@ class HomeFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
 
-        // View pager
-        (activity as AppCompatActivity).setSupportActionBar(toolbar_search_home)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         view_refresh_header.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh() {
                 view_refresh_header.postDelayed({
-                    getDataAVT()
                     getListProductSale()
 
                     // Get list product sale
-                    getListIdProduct()
-                    if (productViewedList.isEmpty()) ll_viewed_product.visibility = View.GONE
-                    else ll_viewed_product.visibility = View.VISIBLE
+                    getListIdProductViewed()
 
                     getDataCategory()
                     getListProduct()
+
                     view_refresh_header.stopRefresh()
-                }, 2000)
+                }, 1000)
             }
         })
 
         // product viewed init
-        productViewedAdapter = ProductViewedAdapter(productViewedList, this)
+        productViewedAdapter = ProductViewedAdapter(productViewedList, requireContext())
         // Set rcyclerview horizontal
         rv_product_viewed.layoutManager = LinearLayoutManager(
             context,
@@ -264,7 +284,7 @@ class HomeFragment : Fragment() {
         rv_category_home.adapter = categoryAdapter
 
         // product sale init
-        productSaleAdapter = ProductSaleAdapter(productSaleList, this)
+        productSaleAdapter = ProductSaleAdapter(productSaleList, requireContext())
         // Set rcyclerview horizontal
         rv_product_sale_home.layoutManager = LinearLayoutManager(
             context,
@@ -275,7 +295,7 @@ class HomeFragment : Fragment() {
 
 
         // Product list init
-        productAdapter = ProductAdapter(productList, this)
+        productAdapter = ProductAdapter(productList, requireContext())
         rv_product_home.adapter = productAdapter
         rv_product_home.layoutManager = GridLayoutManager(requireContext(), 2)
         //This will for default android divider
@@ -300,12 +320,22 @@ class HomeFragment : Fragment() {
                         val image = ds.child(PhysicsConstants.IMAGE_PRODUCT).value as String
                         val infor = ds.child(PhysicsConstants.INFOR_PRODUCT).value as String
                         val product_count = ds.child(PhysicsConstants.PRODUCT_COUNT).value as Long
-                        val id_category = ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
+                        val id_category =
+                            ds.child(PhysicsConstants.ID_CATEGORY_PRODUCT).value as String
                         val sale = ds.child(PhysicsConstants.PRODUCT_SALE).value as Long
 
                         // if sale of product !=0, then save product into productSaleList
                         if (sale != 0L) {
-                            val product = Product(id, name, price, image, infor, product_count, id_category, sale)
+                            val product = Product(
+                                id,
+                                name,
+                                price,
+                                image,
+                                infor,
+                                product_count,
+                                id_category,
+                                sale
+                            )
                             productSaleList.add(product)
                             println("ten san pham: ${name}")
                         }
@@ -319,7 +349,8 @@ class HomeFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Toast.makeText(
-                    requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
+                    requireContext(),
+                    getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                     Toast.LENGTH_LONG
                 ).show()
                 Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())
@@ -328,14 +359,16 @@ class HomeFragment : Fragment() {
         query.addValueEventListener(valueEventListener)
     }
 
-    private fun inIt() {
+    // set image for avt
+    fun inIt() {
         pager!!.adapter = SlidingImage_Adapter(requireContext(), arrAdvertisement)
         indicator.setViewPager(pager)
+
+
         val density = resources.displayMetrics.density
 
         //Set circle indicator radius
         indicator.setRadius(5 * density)
-        println("so trang ne: ${arrAdvertisement.size}")
         NUM_PAGES = arrAdvertisement.size
 
         // Auto start of viewpager
@@ -346,6 +379,7 @@ class HomeFragment : Fragment() {
             }
             pager?.setCurrentItem(currentPage++, true)
         }
+
         val swipeTimer = Timer()
         swipeTimer.schedule(object : TimerTask() {
             override fun run() {
@@ -369,6 +403,14 @@ class HomeFragment : Fragment() {
 
             }
         })
+        indicator.setOnClickListener() {
+            println("trang hien tai: " + arrAdvertisement[currentPage].id_category)
+            println("tên: " + arrAdvertisement[currentPage].name)
+            var intent = Intent(context, ProductOfCategory::class.java)
+            intent.putExtra("id_category", arrAdvertisement[currentPage].id_category)
+            intent.putExtra("name_category", arrAdvertisement[currentPage].name_category)
+            context!!.startActivity(intent)
+        }
     }
 
     companion object {
@@ -376,6 +418,7 @@ class HomeFragment : Fragment() {
         private var NUM_PAGES = 0
     }
 
+    // get all avt
     private fun getDataAVT() {
         mDatabaseReference = mDatabase!!.reference.child(PhysicsConstants.ADVERTIEMENT)
         progress.visibility = View.VISIBLE
@@ -389,12 +432,14 @@ class HomeFragment : Fragment() {
                         val name = ds.child(PhysicsConstants.NAME_AVT).value as String
                         val image = ds.child(PhysicsConstants.IMAGE_AVT).value as String
                         val id_category = ds.child(PhysicsConstants.AVT_ID_CATEGORY).value as String
+                        val name_category = ds.child(PhysicsConstants.AVT_NAME_CATEGORY).value as String
                         println("lay du lieu ten $name")
                         println("lay du lieu  anh$image")
                         println("lay du lieu id cate $id_category")
                         println("lay du lieu id $id")
 
-                        val advertisement = Advertisement(name, id, image, id_category)
+                        val advertisement =
+                            Advertisement(name, id, image, id_category, name_category)
                         arrAdvertisement.add(advertisement)
                     }
                     println("si mang ne: ${arrAdvertisement.size}")
@@ -402,12 +447,12 @@ class HomeFragment : Fragment() {
                     progress.visibility = View.GONE
                     ll_home.visibility = View.VISIBLE
                 }
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Toast.makeText(
-                    requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
+                    requireContext(),
+                    getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                     Toast.LENGTH_LONG
                 ).show()
                 Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())
@@ -419,6 +464,7 @@ class HomeFragment : Fragment() {
         mDatabaseReference.addValueEventListener(valueEventListener)
     }
 
+    // get data for category
     private fun getDataCategory() {
         mDatabaseReference = mDatabase!!
             .reference!!
@@ -448,7 +494,8 @@ class HomeFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Toast.makeText(
-                    requireContext(), getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
+                    requireContext(),
+                    getString(com.thuypham.ptithcm.mytiki.R.string.error_load_category),
                     Toast.LENGTH_LONG
                 ).show()
                 Log.w("LogFragment", "loadLog:onCancelled", databaseError.toException())

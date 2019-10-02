@@ -10,7 +10,7 @@
     <string name="tb_user">Personal</string>
     <string name="tv_title_user_fragment">Personal</string>
     <string name="tv_order_management">Order management</string>
-    <string name="tv_taken">Tiki has taken over</string>
+    <string name="tv_taken">Order has been received</string>
     <string name="tv_order_waiting">Order waiting for payment</string>
     <string name="wait_shipping">Orders are waiting for shipping</string>
     <string name="order_successful">Order successful</string>
@@ -19,10 +19,9 @@
     <string name="billing_information">Billing Information</string>
     <string name="products_purchased">Products purchased</string>
     <string name="viewd_products">Viewd products</string>
-    <string name="favorite_product">Favorite product</string>
     <string name="products_purchased_later">Products purchased later</string>
     <string name="mycomment">Mycomment</string>
-    <string name="hot_line_1800_6963_free">Hot line: 1800-6963 (Free)</string>
+    <string name="hot_line_1800_6963_free">Hot line: 0373865759</string>
     <string name="support">Support</string>
     <string name="sign_out">Sign out</string>
     <string name="title_sign_in_sign_up">Sign in/Sign up</string>
@@ -36,6 +35,7 @@
     <string name="email">Email</string>
     <string name="birthday">Birthday</string>
     <string name="name_sign_up">Name</string>
+    <string name="add_like_product">Added to favorite product list</string>
     <string name="rab_male">Male</string>
     <string name="female">Female</string>
     <string name="btn_sign_up">Sign up</string>
@@ -126,6 +126,28 @@
     <string name="viewed_product">Viewed products</string>
     <string name="title_home">Home</string>
     <string name="title_notifications">Notifications</string>
+    <string name="color">Color: </string>
+    <string name="change">Change</string>
+    <string name="comment_count">Comment count</string>
+    <string name="out_of_product">Out of product</string>
+    <string name="choose_to_buy">Choose to buy</string>
+    <string name="product_details">Product details</string>
+    <string name="customer_comment">Customer comment</string>
+    <string name="_4_5_5">4.5/5</string>
+    <string name="_100">100%</string>
+    <string name="content_of_product_detail">Content of product detail</string>
+    <string name="make_a_comment">Make a comment</string>
+    <string name="title_comment">Title comment</string>
+    <string name="time_commnent">Time commnent</string>
+    <string name="have_purchase">Have purchase</string>
+    <string name="cmt_count">(1)</string>
+    <string name="favorite_product">Favorite product</string>
+    <string name="empty_list">The list is empty</string>
+    <string name="best_seller">Best seller</string>
+    <string name="all_product">All products</string>
+    <string name="product_list_is_empty">Product list is empty</string>
+    <string name="text_add_cart">This product has been added to the cart</string>
+    <string name="view_cart">View cart</string>
 
 
 </resources>

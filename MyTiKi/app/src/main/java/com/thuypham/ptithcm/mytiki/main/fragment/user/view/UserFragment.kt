@@ -1,16 +1,10 @@
 package com.thuypham.ptithcm.mytiki.main.fragment.user.view
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
@@ -25,10 +19,10 @@ import com.thuypham.ptithcm.mytiki.help.after
 import com.thuypham.ptithcm.mytiki.main.fragment.user.login.activity.EditProfileActivity
 import com.thuypham.ptithcm.mytiki.main.fragment.user.login.activity.SignInUpActivity
 import com.thuypham.ptithcm.mytiki.main.fragment.user.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.dialog_verified_email.*
-import kotlinx.android.synthetic.main.dialog_verified_email.view.*
 import kotlinx.android.synthetic.main.loading_layout.*
 import kotlinx.android.synthetic.main.user_fragment.*
+import android.net.Uri
+import com.thuypham.ptithcm.mytiki.main.product.activity.FavoriteActivity
 
 
 class UserFragment : Fragment() {
@@ -38,11 +32,15 @@ class UserFragment : Fragment() {
 
     val userViewModel: UserViewModel by lazy {
         ViewModelProviders
-                .of(this)
-                .get(UserViewModel::class.java)
+            .of(this)
+            .get(UserViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = UserFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this@UserFragment
         binding.userViewModel = userViewModel
@@ -104,7 +102,8 @@ class UserFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name = snapshot.child(PhysicsConstants.NAME).value as String
                 if (!name.isEmpty()) tv_user_name?.text = name
-                val daycreate = getString(R.string.day_create) + ": " + snapshot.child(PhysicsConstants.DAY_CREATE).value as String
+                val daycreate =
+                    getString(R.string.day_create) + ": " + snapshot.child(PhysicsConstants.DAY_CREATE).value as String
                 if (!daycreate.isEmpty()) tv_time_member?.text = daycreate
             }
 
@@ -114,7 +113,7 @@ class UserFragment : Fragment() {
 
     private fun addEvent() {
 
-        val user: FirebaseUser? = mAuth?.getCurrentUser();
+        var user: FirebaseUser? = mAuth?.getCurrentUser();
         // Check user loged in firebase yet?
         if (user != null) {
             // If you user had loged, the layout of sign in will be disappear
@@ -157,6 +156,66 @@ class UserFragment : Fragment() {
             mAuth?.signOut()
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        // Get help, call phone number
+        tv_hot_line.setOnClickListener() {
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "0373865759"))
+            startActivity(intent)
+        }
+
+        // view viewed list product
+        tv_viewed_products.setOnClickListener() {
+            if (user != null) {
+                // intent to FavoriteActivity
+                val intentFV = Intent(context, FavoriteActivity::class.java)
+                intentFV.putExtra("childKey", PhysicsConstants.VIEWED_PRODUCT)
+                intentFV.putExtra("nameToolbar", getString(R.string.favorite_product))
+                startActivity(intentFV)
+            } else {
+                // If user haven't login yet, intent to sign in
+                val intent = Intent(context, SignInUpActivity::class.java)
+                startActivity(intent)
+
+                println("dang nhap xong")
+                user = mAuth?.getCurrentUser()
+
+                // intent to FavoriteActivity
+                if (user != null) {
+                    val intentFV = Intent(context, FavoriteActivity::class.java)
+                    intentFV.putExtra("childKey", PhysicsConstants.VIEWED_PRODUCT)
+                    intentFV.putExtra("nameToolbar", getString(R.string.viewd_products))
+                    startActivity(intentFV)
+                }
+            }
+
+        }
+
+        // view favorite list product
+        tv_favorite_products.setOnClickListener() {
+            if (user != null) {
+                // intent to FavoriteActivity
+                val intentFV = Intent(context, FavoriteActivity::class.java)
+                intentFV.putExtra("childKey", PhysicsConstants.FAVORITE_PRODUCT)
+                intentFV.putExtra("nameToolbar", getString(R.string.favorite_product))
+                startActivity(intentFV)
+            } else {
+                // If user haven't login yet, intent to sign in
+                val intent = Intent(context, SignInUpActivity::class.java)
+                startActivity(intent)
+
+                println("dang nhap xong")
+                user = mAuth?.getCurrentUser()
+
+                // intent to FavoriteActivity
+                if (user != null) {
+                    val intentFV = Intent(context, FavoriteActivity::class.java)
+                    intentFV.putExtra("childKey", PhysicsConstants.FAVORITE_PRODUCT)
+                    intentFV.putExtra("nameToolbar", getString(R.string.favorite_product))
+                    startActivity(intentFV)
+                }
+            }
+
         }
     }
 

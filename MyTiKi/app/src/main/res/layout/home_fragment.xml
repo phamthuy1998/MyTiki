@@ -18,7 +18,6 @@
     <com.todou.nestrefresh.ChildCoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         app:layout_behavior="@string/nest_refresh_scroll_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout

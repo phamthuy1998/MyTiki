@@ -12,5 +12,7 @@ class Advertisement(
         @SerializedName("image")
         var image: String?,
         @SerializedName("id_category")
-        var id_category: String
+        var id_category: String,
+        @SerializedName("name_category")
+        var name_category: String
 ) : Serializable

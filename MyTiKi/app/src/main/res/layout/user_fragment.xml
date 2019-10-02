@@ -76,25 +76,25 @@
                             <TextView
                                 android:id="@+id/tv_user_name"
                                 android:layout_width="match_parent"
-                                android:singleLine="true"
                                 android:layout_height="wrap_content"
+                                android:singleLine="true"
                                 android:textColor="@android:color/black"
                                 android:textSize="@dimen/ts_name" />
 
                             <TextView
                                 android:id="@+id/tv_email"
-                                android:singleLine="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/ic_blue_right_arrow"
+                                android:singleLine="true"
                                 android:textColor="@android:color/darker_gray"
                                 android:textSize="@dimen/ts_name" />
 
                             <TextView
                                 android:id="@+id/tv_time_member"
-                                android:singleLine="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:singleLine="true"
                                 android:textColor="@android:color/darker_gray"
                                 android:textSize="@dimen/ts_name" />
                         </LinearLayout>
@@ -129,7 +129,6 @@
 
                     </LinearLayout>
 
-
                     <!-- Order management-->
                     <TextView
                         android:id="@+id/tv_manage_order"
@@ -137,7 +136,6 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
                         android:drawableStart="@drawable/ic_order_list"
-                        android:drawableEnd="@drawable/ic_gray_right_arrow"
                         android:drawablePadding="10dp"
                         android:padding="16dp"
                         android:text="@string/tv_order_management"
@@ -211,6 +209,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@android:color/white"
                         android:drawableStart="@drawable/ic_map_marker"
                         android:drawableEnd="@drawable/ic_gray_right_arrow"
@@ -220,20 +219,6 @@
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/ts_name" />
 
-                    <TextView
-                        android:id="@+id/tv_billing_infor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@android:color/white"
-                        android:drawableStart="@drawable/ic_credit_card"
-                        android:drawableEnd="@drawable/ic_gray_right_arrow"
-                        android:drawablePadding="10dp"
-                        android:padding="16dp"
-                        android:text="@string/billing_information"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/ts_name" />
 
                     <TextView
                         android:id="@+id/tv_products_purchased"
@@ -269,7 +254,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
                         android:background="@android:color/white"
-                        android:drawableStart="@drawable/ic_like"
+                        android:drawableStart="@drawable/ic_like_gray"
                         android:drawableEnd="@drawable/ic_gray_right_arrow"
                         android:drawablePadding="10dp"
                         android:padding="16dp"
@@ -277,19 +262,6 @@
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/ts_name" />
 
-                    <TextView
-                        android:id="@+id/tv_products_purchased_later"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:background="@android:color/white"
-                        android:drawableStart="@drawable/ic_bookmark"
-                        android:drawableEnd="@drawable/ic_gray_right_arrow"
-                        android:drawablePadding="10dp"
-                        android:padding="16dp"
-                        android:text="@string/products_purchased_later"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/ts_name" />
 
                     <TextView
                         android:id="@+id/tv_my_comment"
@@ -311,27 +283,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@android:color/white"
+                        android:drawableStart="@drawable/ic_headphones"
                         android:drawableEnd="@drawable/ic_gray_right_arrow"
                         android:drawablePadding="10dp"
                         android:padding="16dp"
                         android:text="@string/hot_line_1800_6963_free"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/ts_name" />
-
-                    <TextView
-                        android:id="@+id/tv_support"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:background="@android:color/white"
-                        android:drawableStart="@drawable/ic_headphones"
-                        android:drawableEnd="@drawable/ic_gray_right_arrow"
-                        android:drawablePadding="10dp"
-                        android:padding="16dp"
-                        android:text="@string/support"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/ts_name" />
-
 
                     <Button
                         android:id="@+id/btn_sign_out"
